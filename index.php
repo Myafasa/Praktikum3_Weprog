@@ -9,7 +9,7 @@ $anime = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>MiniAnimeList</title>
+    <title>MyAnimeList</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
