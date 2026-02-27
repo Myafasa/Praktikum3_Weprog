@@ -13,10 +13,16 @@ $anime = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <header class="navbar">
         MiniAnimeList
     </header>
+
+    <div style="max-width:50px; margin:10px auto; padding:0 10px;">
+        <h2 style="margin:10;">
+            Total Anime: <?= count($anime); ?>
+        </h2>
+    </div>
+
 
     <div class="container">
 
