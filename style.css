@@ -1,0 +1,136 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6fb;
+    color: #333;
+}
+
+.navbar {
+    background: #2e51a2;
+    color: white;
+    padding: 16px 40px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    transition: 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    transform: translateY(-3px);
+}
+
+.card h3 {
+    margin: 0 0 6px 0;
+    font-size: 16px;
+}
+
+.type {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+.rating {
+    font-weight: bold;
+    color: #2e51a2;
+}
+
+.badge {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+    color: white;
+}
+
+.watching { background: #2e51a2; }
+.completed { background: #4caf50; }
+.plan-to-watch { background: #ff9800; }
+.dropped { background: #f44336; }
+
+.actions {
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.actions a {
+    text-decoration: none;
+    color: #2e51a2;
+    margin-right: 10px;
+}
+
+.add-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 2px dashed #2e51a2;
+    color: #2e51a2;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.add-card .plus {
+    font-size: 28px;
+}
+
+/* FORM WRAPPER */
+.form-wrapper {
+    max-width: 450px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+form input,
+form select {
+    padding: 8px;
+    margin-top: 4px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+form button {
+    margin-top: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background: #2e51a2;
+    color: white;
+    cursor: pointer;
+}
+
+form button:hover {
+    background: #1f3d7a;
+}
