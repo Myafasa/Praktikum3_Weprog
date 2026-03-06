@@ -16,7 +16,6 @@ $anime = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
 
-    <!-- NAVBAR -->
     <header class="navbar">
         <div class="navbar-inner">
             <div class="navbar-brand">
@@ -35,7 +34,6 @@ $anime = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </header>
 
-    <!-- HERO STRIP -->
     <div class="hero-strip">
         <div class="hero-inner">
             <span class="hero-label">MY LIST</span>
@@ -59,53 +57,48 @@ $anime = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <!-- FILTER BAR -->
     <div class="filter-bar">
         <div class="filter-inner">
             <span class="filter-label">Sort by:</span>
-            <button class="filter-btn active">Rating</button>
-            <button class="filter-btn">Title</button>
-            <button class="filter-btn">Status</button>
-            <button class="filter-btn">Type</button>
+            <button class="filter-btn active" data-sort="rating">Rating</button>
+            <button class="filter-btn" data-sort="title">Title</button>
+            <button class="filter-btn" data-sort="status">Status</button>
+            <button class="filter-btn" data-sort="type">Type</button>
         </div>
     </div>
 
-    <!-- ANIME GRID -->
     <main class="main-content">
         <div class="container">
 
-            <!-- ADD CARD -->
             <a href="tambah.php" class="card add-card">
                 <div class="add-icon">+</div>
                 <span class="add-label">Add New Anime</span>
             </a>
 
-            <!-- ANIME CARDS -->
             <?php foreach($anime as $index => $row): ?>
-                <div class="card anime-card" style="animation-delay: <?= $index * 0.05 ?>s">
+                <div class="card anime-card"
+                     style="animation-delay: <?= $index * 0.05 ?>s"
+                     data-rating="<?= htmlspecialchars($row['rating']); ?>"
+                     data-title="<?= htmlspecialchars(strtolower($row['judul'])); ?>"
+                     data-status="<?= htmlspecialchars(strtolower($row['status'])); ?>"
+                     data-type="<?= htmlspecialchars(strtolower($row['type'])); ?>">
 
-                    <!-- Rank Badge -->
                     <div class="rank-badge">#<?= $index + 1 ?></div>
 
-                    <!-- Card Header -->
                     <div class="card-header">
                         <div class="card-type-tag"><?= htmlspecialchars($row['type']); ?></div>
                         <div class="card-status-dot <?= strtolower(str_replace(' ', '-', $row['status'])); ?>"></div>
                     </div>
 
-                    <!-- Title -->
                     <h3 class="card-title"><?= htmlspecialchars($row['judul']); ?></h3>
 
-                    <!-- Meta info -->
                     <div class="card-meta">
                         <span class="meta-item studio-icon"><?= htmlspecialchars($row['studio']); ?></span>
                         <span class="meta-item genre-tag"><?= htmlspecialchars($row['genre']); ?></span>
                     </div>
 
-                    <!-- Divider -->
                     <div class="card-divider"></div>
 
-                    <!-- Rating + Episode Row -->
                     <div class="card-bottom">
                         <div class="rating-block">
                             <span class="star">★</span>
@@ -118,12 +111,10 @@ $anime = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                     </div>
 
-                    <!-- Status Badge -->
                     <div class="status-badge <?= strtolower(str_replace(' ', '-', $row['status'])); ?>">
                         <?= htmlspecialchars($row['status']); ?>
                     </div>
 
-                    <!-- Actions -->
                     <div class="actions">
                         <a href="edit.php?id=<?= $row['id']; ?>" class="btn-edit">✎ Edit</a>
                         <a href="hapus.php?id=<?= $row['id']; ?>" class="btn-delete" onclick="return confirm('Hapus anime ini?')">✕ Delete</a>
@@ -136,6 +127,65 @@ $anime = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <footer class="site-footer">
         <p>MiniAnimeList &copy; <?= date('Y') ?> — Inspired by <a href="https://myanimelist.net" target="_blank">MyAnimeList</a></p>
     </footer>
+
+<script>
+    const container   = document.querySelector('.container');
+    const addCard     = document.querySelector('.add-card');
+    const filterBtns  = document.querySelectorAll('.filter-btn');
+    let   currentSort = 'rating';
+
+    function getCards() {
+        return [...document.querySelectorAll('.anime-card')];
+    }
+
+    function sortCards(sortBy) {
+        const cards = getCards();
+
+        cards.sort((a, b) => {
+            if (sortBy === 'rating') {
+                // Descending: highest rating first
+                return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
+            } else if (sortBy === 'title') {
+                // Ascending: A → Z
+                return a.dataset.title.localeCompare(b.dataset.title);
+            } else if (sortBy === 'status') {
+                // Custom order: Watching → Completed → Plan to Watch → Dropped
+                const order = { 'watching': 0, 'completed': 1, 'plan to watch': 2, 'dropped': 3 };
+                return (order[a.dataset.status] ?? 9) - (order[b.dataset.status] ?? 9);
+            } else if (sortBy === 'type') {
+                // Ascending: A → Z
+                return a.dataset.type.localeCompare(b.dataset.type);
+            }
+            return 0;
+        });
+
+        // Re-append: add-card stays first, then sorted anime cards
+        container.innerHTML = '';
+        container.appendChild(addCard);
+        cards.forEach((card, i) => {
+            // Update rank badge
+            const badge = card.querySelector('.rank-badge');
+            if (badge) badge.textContent = '#' + (i + 1);
+
+            // Replay fade-in animation
+            card.style.animation = 'none';
+            card.offsetHeight; // force reflow
+            card.style.animation = '';
+            card.style.animationDelay = (i * 0.05) + 's';
+
+            container.appendChild(card);
+        });
+    }
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentSort = btn.dataset.sort;
+            sortCards(currentSort);
+        });
+    });
+</script>
 
 </body>
 </html>

@@ -1,9 +1,6 @@
-/* =============================================
-   MiniAnimeList — MAL-inspired CSS
-   ============================================= */
-
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Bebas+Neue&display=swap');
-
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 :root {
     --mal-blue:       #2e51a2;
     --mal-blue-dark:  #1a3a7a;
