@@ -48,9 +48,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
 
-<header class="navbar">
-    MiniAnimeList
-</header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniAnimeList</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="navbar-inner">
+            <div class="navbar-brand">
+                <span class="brand-icon">▶</span>
+                <span class="brand-text">Mini<strong>AnimeList</strong></span>
+            </div>
+            <nav class="navbar-links">
+                <a href="index.php" class="nav-link active">Home</a>
+                <a href="tambah.php" class="btn-add-nav">+ Add Anime</a>
+            </nav>
+        </div>
+    </header>
 
 <div class="form-wrapper">
     <div class="card">

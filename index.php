@@ -23,14 +23,9 @@ $anime = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <span class="brand-text">Mini<strong>AnimeList</strong></span>
             </div>
             <nav class="navbar-links">
-                <a href="#">Anime</a>
-                <a href="#">Manga</a>
-                <a href="#">Top</a>
-                <a href="#">Seasonal</a>
-            </nav>
-            <div class="navbar-right">
+                <a href="index.php" class="nav-link active">Home</a>
                 <a href="tambah.php" class="btn-add-nav">+ Add Anime</a>
-            </div>
+            </nav>
         </div>
     </header>
 
